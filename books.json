@@ -1,0 +1,19 @@
+{"Books": [
+	{"Title":"Street Players","Authors":"Donald Goines",
+	"Pubisher":"Holloway House","Pages":"256","Price":"$7.70",
+	"New_Release_Date":"2006","ISBN-10":"0870678841"},
+	{"Title":"War and Peace","Authors":"Leo Tolstoy",
+	"Pubisher":"Modern Library Classics","Pages":"1424","Price":"$12.80",
+	"New_Release_Date":"2002","ISBN-10":"037570644"},
+	{"Title":"Homicide: A Year on the Killing Streets","Authors":"David Simon",
+	"Pubisher":"Holt Paperbacks","Pages":"672","Price":"$13.34",
+	"New_Release_Date":"2006","ISBN-10":"0805080759"},
+	{"Title":"The Isis Papers: The Keys to the Colors","Authors":"Dr. Frances Cress Welsing",
+	"Pubisher":"Third World Press","Pages":"300","Price":"$13.95",
+	"New_Release_Date":"1991","ISBN-10":"0883781042"},
+	{"Title":"From Slavery to Freedom: A History of African Americans","Authors":"John Hope Franklin and Evelyn Brooks Higginbotham",
+	"Pubisher":"McGraw-Hill","Pages":"736","Price":"$116.53",
+	"New_Release_Date":"2010","ISBN-10":"0072963786"}
+]}	
+
+	
