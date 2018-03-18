@@ -1,0 +1,114 @@
+---
+title: "Data 607 - Week 7 Assignment"
+author: "Brian K. Liles"
+date: "March 18, 2018"
+output: html_document
+---
+#Goal
+Pick three of your favorite books on one of your favorite subjects. At least one of the books should have more than one author. For each book, include the title, authors, and two or three other attributes that you find interesting.
+
+Take the information that you've selected about these three books, and separately create three files which store the book's information in HTML (using an html table), XML, and JSON formats (e.g. "books.html", "books.xml", and "books.json"). To help you better understand the different file structures, I'd prefer that you create each of these files "by hand" unless you're already very comfortable with the file formats.
+
+Write R code, using your packages of choice, to load the information from each of the three sources into separate R data frames. Are the three data frames identical?
+
+#Packages
+Load the necessary packages of choice:
+```{r}
+library(XML)
+library(RCurl)
+library(tidyverse)
+library(knitr)
+library(jsonlite)
+```
+#Books (HTML)
+First, we download the html file from github using the **getURL** function from the **RCurl** package and name it **books_html_web**
+```{r}
+books_html_web <- getURL("https://raw.githubusercontent.com/LilesB/Data-607---Week-7-Assignment/master/books.html")
+```
+Next we parse the data using **xmlParse** and check the classification using the **class** function
+```{r}
+books_html <- xmlParse(books_html_web, isHTML=TRUE)
+class(books_html)
+```
+
+Next, we view the contents of **books_html**
+```{r}
+books_html
+```
+Use **readHTMLTable** to read in the data and then view the contents
+```{r}
+books_html <- readHTMLTable(books_html, header=TRUE)
+books_html
+```
+```{r}
+books_html <- as.data.frame(books_html)
+names(books_html)
+```
+As you can see once converted to a dataframe we lost the header titles so we will rename them using the **dplyr** package
+```{r}
+books_html <- books_html %>% rename(Title = NULL.Title,
+                      Authors = NULL.Authors,
+                      Publisher = NULL.Publisher,
+                      Pages = NULL.Pages,
+                      Price = NULL.Price,
+                      NewReleaseDate = NULL.New.Release.Date,
+                      ISBN10 = NULL.ISBN.10)
+kable(books_html, format = "html", caption = "Books in HTML Format" )
+```
+
+#Books (XML)
+First, we download the xml file from github using the **getURL** function from the **RCurl** package and name it **books_xml_web**
+```{r}
+books_xml_web <- getURL("https://raw.githubusercontent.com/LilesB/Data-607---Week-7-Assignment/master/books.xml")
+```
+Next we parse the data using **xmlParse** and check the classification using the **class** function
+```{r}
+books_xml <- xmlParse(books_xml_web)
+class(books_xml)
+```
+Next, we view the contents of **books_xml**
+```{r}
+books_xml
+```
+We now convert **books_xml** to a data frame using **xmlToDataFrame**
+```{r}
+books_xml <- xmlToDataFrame(books_xml)
+```
+Using the **glimpse** feature we will look into **books_xml** and then view the dataframe.
+```{r}
+glimpse(books_xml)
+```
+```{r}
+kable(books_xml, format = "html", caption = "Books in XML Format")
+```
+#Books (JSON)
+First, we download the json file from github using the **getURL** function from the **RCurl** package and name it **books_json_web**
+```{r}
+books_json_web <- getURL("https://raw.githubusercontent.com/LilesB/Data-607---Week-7-Assignment/master/books.json")
+```
+Next, we view the contents of **books_json_web**
+```{r}
+books_json_web
+```
+We then convert the JSON file using **fromJSON**
+```{r}
+books_json <- fromJSON(books_json_web)
+```
+Next we convert **books_json** to a data frame and print the column headers using the **names** feature
+```{r}
+books_json <- as.data.frame(books_json)
+names(books_json)
+```
+Similar to the html conversion we lost the original names, so we will rename using **dplyr** package
+
+```{r}
+books_json <- books_json %>% rename(Title = Books.Title,
+                                    Authors = Books.Authors,
+                                    Publisher = Books.Pubisher,
+                                    Pages = Books.Pages,
+                                    Price = Books.Price,
+                                    NewReleaseDate = Books.New_Release_Date,
+                                    ISBN10 = Books.ISBN.10)
+kable(books_json, format = "html", caption = "Books in JSON Format")
+```
+
